@@ -9,7 +9,7 @@ int main() {
   bst->insert(2);
   bst->insert(7);
   //bst->insert(12);
-
+  bst->remove(7);
 
   bst->print();
 

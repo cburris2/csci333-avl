@@ -37,7 +37,7 @@ void BST<T>::insert(T v) {
 template <typename T>
 void BST<T>::remove(T v) {
   Node<T>** curr = &root;
-  Node<T>** nodeToRemove = &root;
+  Node<T>* nodeToRemove;
   Node<T>* iOS;
 
    if ((*curr) !=0) {
@@ -50,12 +50,12 @@ void BST<T>::remove(T v) {
 		    }
 			  
 	  }
-	  nodeToRemove = curr;
+	  nodeToRemove = *curr;
 	  if(*curr == 0) { return;}
 	  iOS = (*curr)->getRightChild(); 	  
-/*	  while((*iOS) != 0 && (*iOS)->getValue() > v){
-		if(v < (*iOS)->getValue() && (*iOS)->getValue() != 0){
-		    iOS = &(*iOS)->getLeftChild();
+	  while(iOS->getValue() != 0 && iOS->getValue() > v){ 
+		if(v < iOS->getValue() && iOS->getValue() != 0){
+		    iOS = iOS->getLeftChild();
 		}
 	  
 	  }
@@ -63,7 +63,6 @@ void BST<T>::remove(T v) {
 	  *curr=iOS;
 	  delete nodeToRemove;
 
-}*/
 
     }
 }
