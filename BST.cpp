@@ -51,21 +51,22 @@ void BST<T>::remove(T v) {
 			  
 	  }
 	  nodeToRemove = curr;
-	  if(curr == 0) { return;}
-	  iOS = curr->getRightChild(); 	  
-	  while((*iOS) != 0 && (*iOS)->getValue() > v){
+	  if(*curr == 0) { return;}
+	  iOS = (*curr)->getRightChild(); 	  
+/*	  while((*iOS) != 0 && (*iOS)->getValue() > v){
 		if(v < (*iOS)->getValue() && (*iOS)->getValue() != 0){
-		    curr= &(*curr)->getLeftChild();
+		    iOS = &(*iOS)->getLeftChild();
 		}
 	  
 	  }
-	  iOS->setLeftChild((**nodeToRemove->getLeftChild())); 	
+	  iOS->setLeftChild(*nodeToRemove->getLeftChild()); 	
+	  *curr=iOS;
+	  delete nodeToRemove;
 
+}*/
 
+    }
 }
-
-}
-
 template <typename T>
 void BST<T>::print() {
   traversalPrint(root);
@@ -75,7 +76,7 @@ template <typename T>
 void BST<T>::traversalPrint(Node<T>* root) {
   if(root != 0) {
   
-    traversalPrint(root->getLeftChild())
+    traversalPrint(root->getLeftChild());
     
     std::cout << root->getValue() << std::endl;
     
