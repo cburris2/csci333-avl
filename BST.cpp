@@ -37,33 +37,46 @@ void BST<T>::insert(T v) {
 template <typename T>
 void BST<T>::remove(T v) {
   Node<T>** curr = &root;
-  Node<T>* nodeToRemove;
   Node<T>* iOS;
-
    if ((*curr) !=0) {
 	  while((*curr) != 0 && (*curr)->getValue() != v){
 		if(v > (*curr)->getValue()){
 		    curr= &(*curr)->getRightChild();
-		}
+    		}
 		else{  
 		    curr= &(*curr)->getLeftChild();
 		    }
-			  
 	  }
-	  nodeToRemove = *curr;
-	  if(*curr == 0) { return;}
-	  iOS = (*curr)->getRightChild(); 	  
-	  while(iOS->getValue() != 0 && iOS->getValue() > v){ 
-		if(v < iOS->getValue() && iOS->getValue() != 0){
-		    iOS = iOS->getLeftChild();
-		}
 	  
-	  }
-	  iOS->setLeftChild(*nodeToRemove->getLeftChild()); 	
-	  *curr=iOS;
-	  delete nodeToRemove;
+	  if(*curr != 0){
+	   Node<T>* nTR = (*curr);	  
+	     if(nTR->getRightChild() == 0 && nTR->getLeftChild()==0){
+	     *curr = 0;
+	     }
+	     else if (nTR->getRightChild() ==0){
 
+		    *curr = (*curr)->getLeftChild();
+	     } 
+	     else if(nTR->getLeftChild() == 0){
 
+		    *curr = (*curr)->getRightChild();
+	     }
+	     else {
+		    iOS = nTR->getRightChild();
+		    while (iOS->getLeftChild() != 0){
+
+				iOS = iOS->getLeftChild();
+				*curr = (*curr)->getRightChild();
+
+		    }
+		    iOS->setLeftChild(*(nTR->getLeftChild()));	  	    
+		    *curr = (*curr)->getRightChild();
+
+	     }
+		delete nTR;
+	  std::cout<< "nodeToRemove del "<<std::endl;
+
+    }
     }
 }
 template <typename T>
