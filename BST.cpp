@@ -4,6 +4,7 @@
 #include <vector>
 #include <iomanip>
 #include <math.h>
+#include <string>
 
 
 
@@ -119,6 +120,10 @@ void BST<T>::treePrint(){
     
     levels.push_back(firstRows);
     isPresent.push_back(otherRows);
+    
+    levels[0].push_back(root->getValue());
+    isPresent[0].push_back(true);
+
 
     x.push_front(root);
 
@@ -145,11 +150,11 @@ void BST<T>::treePrint(){
 		    nextLevel++;
 
 		} 
-	//	else { isPresent[depth].push_back(false);
+		else { isPresent[depth].push_back(false);
 
-	//	}
+		}
 
-		else if(val->getRightChild()!=0){
+		if(val->getRightChild()!=0){
 		    
 		    x.push_back(val->getRightChild());
 		    levels[depth].push_back(val->getRightChild()->getValue());
@@ -157,7 +162,7 @@ void BST<T>::treePrint(){
 		    nextLevel++;
     
 		}
-		else if(curLevel==0){
+		if(curLevel==0){
 		    depth++;
 		    curLevel = nextLevel;
 		    nextLevel = 0;
@@ -175,35 +180,29 @@ void BST<T>::treePrint(){
 		width = pow(1.625, depth-i-1);
 		if(isPresent[i][0]){
 		    std::cout << std::setw(width) << levels[i][0];
-
 		}
 		else{
 		    std::cout << std::setw(width) << "  ";
-
-
 		}
 		for(int j = 1; j < (int)levels[i].size(); j++){
-
 		    if(isPresent[i][j]){
-			  std::cout << std::setw(pow(1.75,depth-i-1)) <<
-				std::setfill('  ') << levels[i][j];
-
-	/*	    }
+			  std::cout << std::setw(pow(1.75, depth-i-1)) <<
+				std::setfill(' ') << levels[i][j];
+	  	    }
 		    else {
 			  std::cout << std::setw(pow(1.75, depth-i-1)) <<
-				    std::setfill("  ") << " ";
-		    }*/
+				    std::setfill(' ') << " ";
+		    }
 
-
-	  //}
-
+		}  
 		std::cout << std::endl;
-
-    
 	  }
 
+	  
+
+}
 
 
 template class BST<int>;
 template class BST<double>;
-//template class BST<std::string>;
+template class BST<std::string>;

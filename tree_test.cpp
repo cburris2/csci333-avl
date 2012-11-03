@@ -13,7 +13,7 @@ int main() {
   bst->insert(17);
   bst->remove(7);
   
+  bst->treePrint();
   bst->print();
-
 
 }
