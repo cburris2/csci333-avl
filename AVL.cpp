@@ -1,4 +1,4 @@
-#include "BST.h"
+#include "AVL.h"
 #include <iostream>
 #include <list>
 #include <vector>
@@ -9,25 +9,25 @@
 
 
 template <typename T>
-BST<T>::BST() {
+AVL<T>::AVL() {
   root = 0;
 }
 
 template <typename T>
-BST<T>::~BST() {
+AVL<T>::~AVL() {
   
 }
 
 
 template <typename T>
-bool BST<T>::find(T v) {
+bool AVL<T>::find(T v) {
   Node<T>* temp = new Node<T>(v);
   root = temp;  
   return true;
 }
 
 template <typename T>
-void BST<T>::insert(T v) {
+void AVL<T>::insert(T v) {
   Node<T>* temp = new Node<T>(v);
   Node<T>** curr = &root;
 
@@ -42,7 +42,7 @@ void BST<T>::insert(T v) {
 }
 
 template <typename T>
-void BST<T>::remove(T v) {
+void AVL<T>::remove(T v) {
   Node<T>** curr = &root;
   Node<T>* iOS;
    if ((*curr) !=0) {
@@ -87,12 +87,12 @@ void BST<T>::remove(T v) {
     }
 }
 template <typename T>
-void BST<T>::print() {
+void AVL<T>::print() {
   traversalPrint(root);
 }
 
 template <typename T>
-void BST<T>::traversalPrint(Node<T>* root) {
+void AVL<T>::traversalPrint(Node<T>* root) {
   if(root != 0) {
   
     traversalPrint(root->getLeftChild());
@@ -109,7 +109,7 @@ void BST<T>::traversalPrint(Node<T>* root) {
 
 
 template <typename T>
-void BST<T>::treePrint(){
+void AVL<T>::treePrint(){
     std::list<Node<T>* > x;
 
     std::vector<std::vector<bool> > isPresent;
@@ -203,6 +203,6 @@ void BST<T>::treePrint(){
 }
 
 
-template class BST<int>;
-template class BST<double>;
-template class BST<std::string>;
+template class AVL<int>;
+template class AVL<double>;
+template class AVL<std::string>;

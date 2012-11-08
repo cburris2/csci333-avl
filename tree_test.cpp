@@ -1,19 +1,19 @@
-#include "BST.h"
+#include "AVL.h"
 
 int main() {
-  BST<int>* bst = new BST<int>();
+  AVL<int>* avl = new AVL<int>();
 
-  bst->insert(10);
-  bst->insert(5);
-  bst->insert(15);
-  bst->insert(3);
-  bst->insert(7);
-  bst->insert(12);
+  avl->insert(10);
+  avl->insert(5);
+  avl->insert(15);
+  avl->insert(3);
+  avl->insert(7);
+  avl->insert(12);
  
-  bst->insert(17);
-  bst->remove(7);
+  avl->insert(17);
+  avl->remove(7);
   
-  bst->treePrint();
-  bst->print();
+  avl->treePrint();
+  avl->print();
 
 }
