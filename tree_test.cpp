@@ -1,4 +1,5 @@
 #include "AVL.h"
+#include <iostream>
 
 int main() {
   AVL<int>* avl = new AVL<int>();
@@ -11,9 +12,14 @@ int main() {
   avl->insert(12);
  
   avl->insert(17);
-  avl->remove(7);
-  
-  avl->treePrint();
+//  avl->remove(7);
+//  avl->treePrint();
   avl->print();
+ // std::cout << avl << std::endl;
+  //avl->traversalPrint(avl->root);
+  //std::cout<< avl->inOrderTraversal(root) << std::endl;
+    
+
+
 
 }

@@ -30,9 +30,9 @@ template <typename T>
 void AVL<T>::insert(T v) {
     Node<T>* temp = new Node<T>(v);
     Node<T>** curr = &root;
-    Node<T>** critNode = 0;
+//    Node<T>** critNode = &root;
     Node<T>** insertNode = &root;
-    std::cout << "created nodes" << std::endl;
+
 //  if((*curr)->getBalance() > 0 || (*curr)->getBalance() < 0 ) {
 	  //special case of rotating about the root
 //	  *curr = root;
@@ -41,28 +41,23 @@ void AVL<T>::insert(T v) {
   /* insert from BST */
   while (*curr != 0) {
     if (v < (*curr)->getValue()) {
-     
-    std::cout << "in while" << std::endl;
-      if ((*curr)->getBalance() == 1 || (*curr)->getBalance() == -1){
+      curr = &((*curr)->getLeftChild());
+      if ((*curr)->getBalance() > 0 || (*curr)->getBalance() < 0){
 		critNode = curr;
 	}
-     curr = &((*curr)->getLeftChild());
     } 
     else if (v > (*curr)->getValue()) {
-    
-    std::cout << "in while" << std::endl;
-      if ((*curr)->getBalance() == 1 || (*curr)->getBalance() == -1){
+      curr = &((*curr)->getRightChild());
+      if ((*curr)->getBalance() > 0 || (*curr)->getBalance() < 0){
 		critNode = curr;
-	}
-    curr = &((*curr)->getRightChild());
+      }
     }
-  }//end while 
   *curr = temp;
   insertNode = curr;
+  }//end while
 
-  //  std::cout << (*critNode)->getValue() << std::endl;
 
- //}//end if "
+ //}//end if 
 //}//end if
 
 
@@ -122,10 +117,15 @@ void AVL<T>::print() {
 template <typename T>
 void AVL<T>::traversalPrint(Node<T>* root) {
   if(root != 0) {
+ 
+    std::cout << root->getValue() << std::endl;
 
     traversalPrint(root->getLeftChild());
-    std::cout << root->getValue() << std::endl;
+    
+    //std::cout << root->getValue() << std::endl;
+    
     traversalPrint(root->getRightChild()); 
+
 
   }
 

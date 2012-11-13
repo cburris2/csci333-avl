@@ -19,6 +19,8 @@ class AVL {
   void insert(T v);
   void print();
   void treePrint();
+  void inOrderTraversal(Node<T>* root);
+  void postOrderTraversal(Node<T>* root);
 };
 
 

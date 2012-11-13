@@ -1,16 +1,32 @@
 #include <string>
 #include "Node.h"
+#include <iostream>
+
 
 template <typename T>
 Node<T>::Node(T v) {
   value = v;
   leftChild = 0;
   rightChild = 0;
+  balance = 0;
 }
 
 template <typename T>
 T Node<T>::getValue() {
   return value;
+}
+
+
+template <typename T>
+short Node<T>::getBalance() {
+ // std::cout << balance << std::endl;
+  return balance;
+}
+
+template <typename T>
+void Node<T>::setBalance(short b) {
+	  balance = b;
+	  
 }
 
 template <typename T>
