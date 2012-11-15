@@ -30,28 +30,27 @@ template <typename T>
 void AVL<T>::insert(T v) {
     Node<T>* temp = new Node<T>(v);
     Node<T>** curr = &root;
-    Node<T>** critNode = 0;
+    Node<T>** critNode = &root;
     Node<T>** insertNode = &root;
+    bool dblRotate = false;
     std::cout << "created nodes" << std::endl;
-//  if((*curr)->getBalance() > 0 || (*curr)->getBalance() < 0 ) {
-	  //special case of rotating about the root
-//	  *curr = root;
-//	  }
-//  if((*curr)->getLeftChild() !=0 || (*curr)->getRightChild() !=0) {  
+  
   /* insert from BST */
   while (*curr != 0) {
     if (v < (*curr)->getValue()) {
-     
+      (*curr)->setBalance((*curr)->getBalance()-1);
     std::cout << "in while" << std::endl;
-      if ((*curr)->getBalance() == 1 || (*curr)->getBalance() == -1){
+      if ((*curr)->getBalance() == -2){
 		critNode = curr;
+		dblRotate = true;
 	}
      curr = &((*curr)->getLeftChild());
     } 
     else if (v > (*curr)->getValue()) {
     
+      (*curr)->setBalance((*curr)->getBalance()+1);
     std::cout << "in while" << std::endl;
-      if ((*curr)->getBalance() == 1 || (*curr)->getBalance() == -1){
+      if ((*curr)->getBalance() == 2) {	
 		critNode = curr;
 	}
     curr = &((*curr)->getRightChild());
@@ -59,11 +58,35 @@ void AVL<T>::insert(T v) {
   }//end while 
   *curr = temp;
   insertNode = curr;
+  
+  if((*critNode)->getBalance() != 0 ) {
+    std::cout << "in if" << std::endl;
+    if ((*critNode)->getBalance() == -2 ){
+	  rotateRight(critNode);
+	  return;
+     }
+
+    else if ((*critNode)->getBalance() == 2 ){
+	  rotateLeft(critNode);
+	  return;
+     }
+
+    else {
+    dblRotate=true;
+    }
+ }
+/*  while(critNode != 0){
+     
+    if (v < (*curr)->getValue()) {
+       
+	 dblRotate = true;
+     curr = &((*curr)->getLeftChild());
+    }
+
+
+  }*/
 
   //  std::cout << (*critNode)->getValue() << std::endl;
-
- //}//end if "
-//}//end if
 
 
 }
@@ -114,6 +137,46 @@ void AVL<T>::remove(T v) {
     }
 }
 
+
+
+template <typename T>
+void AVL<T>::rotateLeft(Node<T>** critNode) {
+    Node<T>** tempRC = &root;
+  //  Node<T>** tempLC = &root;
+    
+    (*tempRC)->setLeftChild(**critNode);
+    (*tempRC) = (*critNode)->getRightChild();
+   
+   
+    std::cout << *tempRC << std::endl;
+    std::cout << "in rotate" << std::endl;
+  //  if((*tempRC)->getLeftChild()){
+   // (*tempLC) = (*tempRC)->getLeftChild();
+
+   
+  //  std::cout << *tempLC << std::endl;
+/*    
+    (*critNode)->setRightChild(**tempLC);
+    }
+*/    
+    (*tempRC)->setLeftChild(**critNode);
+
+}
+
+template <typename T>
+void AVL<T>::rotateRight(Node<T>** critNode) {
+    Node<T>** tempRC = &root;
+    Node<T>** tempLC = &root;
+    
+    (*tempLC) = (*critNode)->getLeftChild();
+    (*tempRC) = (*tempLC)->getRightChild();
+    
+    (*tempLC)->setRightChild(**critNode);
+    (*critNode)->setLeftChild(**tempRC);
+
+}
+
+
 template <typename T>
 void AVL<T>::print() {
   traversalPrint(root);
@@ -123,8 +186,12 @@ template <typename T>
 void AVL<T>::traversalPrint(Node<T>* root) {
   if(root != 0) {
 
-    traversalPrint(root->getLeftChild());
     std::cout << root->getValue() << std::endl;
+
+    std::cout << "balance =" << root->getBalance() << std::endl;
+    traversalPrint(root->getLeftChild());
+
+  //  std::cout << root->getValue() << std::endl;
     traversalPrint(root->getRightChild()); 
 
   }
