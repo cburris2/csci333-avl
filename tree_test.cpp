@@ -1,22 +1,24 @@
 #include "AVL.h"
+#include "Node.h"
 #include <iostream>
 
 int main() {
-  AVL<int>* avl = new AVL<int>();
-
-  avl->insert(4);
-  avl->insert(7);
-  avl->insert(6);
-  avl->insert(8);
-  avl->insert(9);
+  AVL<int>* avlTree = new AVL<int>();
+  
+   
+  avlTree->insert(4);
+  avlTree->insert(7);
+  avlTree->insert(6);
+  avlTree->insert(8);
+  avlTree->insert(9);
 /*  avl->insert(12);
  */
-  avl->print();
+  avlTree->print();
  // std::cout << avl << std::endl;
   //avl->traversalPrint(avl->root);
- std::cout<< *avl->inOrderTraversal(root) << std::endl;
+// std::cout << avlTree->inOrderTraversal(root) << std::endl;
     
 
 
-
 }
+

@@ -206,7 +206,14 @@ void AVL<T>::rotateRight(Node<T>** critNode) {
 
 template <typename T>
 void AVL<T>::print() {
+  
+  std::cout << "Pre-order traversal" << std::endl;
   traversalPrint(root);
+  std::cout << "In-order traversal" << std::endl;
+  inOrderTraversal(root);
+  std::cout << "Post-order traversal" << std::endl;
+  postOrderTraversal(root);
+
 }
 
 template <typename T>
@@ -325,12 +332,13 @@ void AVL<T>::treePrint(){
 
 template <typename T>
 void AVL<T>::inOrderTraversal(Node<T>* root) {
+    
     if (root != 0) {
+    
     inOrderTraversal(root->getLeftChild());
-
-    //inOrderTraversal(root->getValue());
-
+    std::cout << (root->getValue()) << std::endl;
     inOrderTraversal(root->getRightChild());
+    
     }
 
 }
@@ -343,7 +351,7 @@ void AVL<T>::postOrderTraversal(Node<T>* root) {
     if (root != 0) {
 	  postOrderTraversal(root->getLeftChild());
 	  postOrderTraversal(root->getRightChild());
-	 // postOrderTraversal(root->getValue());
+	  std::cout << (root->getValue()) << std::endl;
     }
 }
 
