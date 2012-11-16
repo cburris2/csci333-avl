@@ -100,7 +100,8 @@ void AVL<T>::insert(T v) {
 	  if((*critNode)->getBalance() == -1){
 		rotateLeft(critNode);
 		rotateRight(critNode);
-
+	  
+		(*critNode)->setBalance(0);
 
 	  }
     }
@@ -112,6 +113,7 @@ void AVL<T>::insert(T v) {
 		rotateLeft(critNode);
 
 
+		(*critNode)->setBalance(0);
 	  }
     }
        
@@ -181,7 +183,7 @@ void AVL<T>::rotateLeft(Node<T>** critNode) {
     std::cout << "critNode is " << (*critNode)->getValue() << std::endl;
     std::cout << "root is " << root->getValue() << std::endl;
     std::cout << "tempRC is " << tempRC->getValue() << std::endl;
-   
+    std::cout << "tempLC is " << tempRC->getValue() << std::endl;
 }
 
 template <typename T>
@@ -194,7 +196,11 @@ void AVL<T>::rotateRight(Node<T>** critNode) {
     (*critNode)->setRightChild(*tempRC);
     
     tempRC->setLeftChild(*tempLC);
-
+    
+    std::cout << "critNode is " << (*critNode)->getValue() << std::endl;
+    std::cout << "root is " << root->getValue() << std::endl;
+    std::cout << "tempRC is " << tempRC->getValue() << std::endl;
+    std::cout << "tempLC is " << tempRC->getValue() << std::endl;
 }
 
 
@@ -322,9 +328,9 @@ void AVL<T>::inOrderTraversal(Node<T>* root) {
     if (root != 0) {
     inOrderTraversal(root->getLeftChild());
 
-   // inOrderTraversal(root->getValue());
+    //inOrderTraversal(root->getValue());
 
-    inOrderTraversal(root->getLeftChild());
+    inOrderTraversal(root->getRightChild());
     }
 
 }
