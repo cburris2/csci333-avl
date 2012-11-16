@@ -32,9 +32,7 @@ void AVL<T>::insert(T v) {
     Node<T>** curr = &root;
     Node<T>** critNode = &root;
     Node<T>** insertNode = &root;
-    bool dblRotate = false;
-    std::cout << "created nodes" << std::endl;
-
+    bool insertLeft,insertRight,critLeft,critRight = false;
 
   /* insert from BST */
   while (*curr != 0) {
@@ -49,12 +47,12 @@ void AVL<T>::insert(T v) {
      if((*curr)->getRightChild() != 0) { 
      (*curr)->setBalance((*curr)->getBalance()+1);
      }
-    std::cout << "in while" << std::endl;
-      if ((*curr)->getBalance() == -1){
+	  if ((*curr)->getBalance() == -1){
 		critNode = curr;
-		dblRotate = true;
-	}
+		critLeft = true;
+	  }	
      curr = &((*curr)->getLeftChild());
+     insertLeft = true;
     } 
     else if (v > (*curr)->getValue()) {
     
@@ -65,12 +63,12 @@ void AVL<T>::insert(T v) {
      if((*curr)->getRightChild() != 0) { 
      (*curr)->setBalance((*curr)->getBalance()+1);
      }
-    std::cout << "in while" << std::endl;
-      if ((*curr)->getBalance() == 1) {
-
+	  if ((*curr)->getBalance() == 1) {
 		critNode = curr;
-	}
+		critRight = true;
+	  }	
     curr = &((*curr)->getRightChild());
+    insertRight = true;
     }
 
   }//end while 
@@ -79,37 +77,44 @@ void AVL<T>::insert(T v) {
 
   *curr = temp;
   insertNode = curr;
- //Right Right Case
+   /* Left Left Case */
     std::cout << "in if" << std::endl;
-    if ((*critNode)->getBalance() == -1 ){
-	  rotateRight(critNode);
+    if(critLeft == true && insertLeft == true){
+	  if ((*critNode)->getBalance() == -1 ){
+		rotateRight(critNode);
 
-     (*critNode)->setBalance(0);
-     }
+		(*critNode)->setBalance(0);
+	  }
+    }	  
+    /* Right Right Case */
+    if(critRight == true && insertRight == true){
+	  if ((*critNode)->getBalance() == 1 ){
+		rotateLeft(critNode);
 
-    else if ((*critNode)->getBalance() == 1 ){
-	  rotateLeft(critNode);
+		(*critNode)->setBalance(0);
 
-     (*critNode)->setBalance(0);
-
-     }
-
-    else {
-    dblRotate=true;
-// }
- }
-/*  while(critNode != 0){
-     
-    if (v < (*curr)->getValue()) {
-       
-	 dblRotate = true;
-     curr = &((*curr)->getLeftChild());
+	  }	
     }
+    /* Left Right Case */ 
+    if(critLeft == true && insertRight == true) {
+	  if((*critNode)->getBalance() == -1){
+		rotateLeft(critNode);
+		rotateRight(critNode);
 
 
-  }*/
+	  }
+    }
+       
+    /* Right Left Case */ 
+    if(critRight == true && insertLeft == true) {
+	  if((*critNode)->getBalance() == 1){
+		rotateRight(critNode);
+		rotateLeft(critNode);
 
-  //  std::cout << (*critNode)->getValue() << std::endl;
+
+	  }
+    }
+       
 
 
 }
@@ -181,14 +186,14 @@ void AVL<T>::rotateLeft(Node<T>** critNode) {
 
 template <typename T>
 void AVL<T>::rotateRight(Node<T>** critNode) {
-    Node<T>** tempRC = &root;
-    Node<T>** tempLC = &root;
+    Node<T>* tempRC = *critNode;
+    Node<T>* tempLC = (*critNode)->getLeftChild()->getRightChild();
     
-    (*tempLC) = (*critNode)->getLeftChild();
-    (*tempRC) = (*tempLC)->getRightChild();
+    *critNode = tempRC->getLeftChild();
+
+    (*critNode)->setRightChild(*tempRC);
     
-    (*tempLC)->setRightChild(**critNode);
-    (*critNode)->setLeftChild(**tempRC);
+    tempRC->setLeftChild(*tempLC);
 
 }
 
