@@ -28,12 +28,12 @@ bool AVL<T>::find(T v) {
 
 template <typename T>
 void AVL<T>::insert(T v) {
-    Node<T>* temp = new Node<T>(v);
-    Node<T>** curr = &root;
-    Node<T>** critNode = &root;
-    Node<T>** insertNode = &root;
-    bool insertLeft,insertRight,critLeft,critRight = false;
-
+  Node<T>* temp = new Node<T>(v);
+  Node<T>** curr = &root;
+  Node<T>** critNode = &root;
+  Node<T>** insertNode = &root;
+  bool insertLeft,insertRight,critLeft,critRight = false;
+  
   /* insert from BST */
   while (*curr != 0) {
    
@@ -78,7 +78,6 @@ void AVL<T>::insert(T v) {
   *curr = temp;
   insertNode = curr;
    /* Left Left Case */
-    std::cout << "in if" << std::endl;
     if(critLeft == true && insertLeft == true){
 	  if ((*critNode)->getBalance() == -1 ){
 		rotateRight(critNode);
@@ -126,9 +125,9 @@ void AVL<T>::remove(T v) {
   Node<T>** curr = &root;
   Node<T>* iOS;
   Node<T>** critNode = &root;
-//  bool insertLeft,insertRight,critLeft,critRight = false;
+  //bool iOSLeft,iOSRight,critLeft,critRight = false;
   std::list<Node<T>* > theList;
- 
+     
   if ((*curr) !=0) {
 	  while((*curr) != 0 && (*curr)->getValue() != v){
 		if(v > (*curr)->getValue()){
@@ -153,9 +152,11 @@ void AVL<T>::remove(T v) {
 	     }
 	     else {
 		    iOS = nTR->getRightChild();
+	  	  std::cout << "iOS is " <<  iOS->getValue() << std::endl;
 		    while (iOS->getLeftChild() != 0){
 				iOS = iOS->getLeftChild();
 				*curr = (*curr)->getRightChild();
+	  	  std::cout << "iOS is " <<  iOS->getValue() << std::endl;
 
 		    }
 		    iOS->setLeftChild(*(nTR->getLeftChild()));	  	    
@@ -163,35 +164,90 @@ void AVL<T>::remove(T v) {
 	     }
 		    delete nTR;
 		    std::cout<< "nodeToRemove del "<<std::endl;
+	   }
 	  }
-	  }
-	
-		   curr = &root; 
-	  	   
-	  while((*curr) != 0){
-		if(iOS->getValue() < (*curr)->getLeftChild()->getValue()){
-		    curr= &(*curr)->getLeftChild();
-		    theList.push_back(*curr);
-		    (*curr)->setBalance((*curr)->getBalance()-1);
-    		}
-		else{  
-		    curr= &(*curr)->getRightChild();
-		    theList.push_back(*curr);
+/*	
+		  iOS = (*curr); 
+	  while((*curr)->getValue() != iOS->getValue()){
+		if(iOS->getValue() < (*curr)->getValue()){
+		    iOSLeft=true;
 
-		    (*curr)->setBalance((*curr)->getBalance()+1);
+		    if((*curr)->getLeftChild() != 0) { 
+		     (*curr)->setBalance((*curr)->getBalance()-1);
+		     }
+
+		    if((*curr)->getRightChild() != 0) { 
+		     (*curr)->setBalance((*curr)->getBalance()+1);
+		     }
+		    if ((*curr)->getBalance() == -1){
+			critNode = curr;
+		      critLeft = true;
 		    }
-
 		    
-		if ((*curr)->getBalance() == -1){
-		    critNode = curr;
-    		   // critLeft = true;
+		    curr= &(*curr)->getLeftChild();
 		}
+		if(iOS->getValue() > (*curr)->getValue()){
+		    iOSRight = true;
+    
+		  if((*curr)->getLeftChild() != 0) { 
+		     (*curr)->setBalance((*curr)->getBalance()-1);
+		  }
 
-		if ((*curr)->getBalance() == 1){
-		    critNode = curr;
-		   // critLeft = true;
-		}
+		  if((*curr)->getRightChild() != 0) { 
+		     (*curr)->setBalance((*curr)->getBalance()+1);
+		  }
+		    if ((*curr)->getBalance() == 1) {
+		     critNode = curr;
+		     critRight = true;
+
+		    }
+		
+		    curr= &(*curr)->getRightChild();
     	}
+    }*/
+
+   /* Left Left Case */
+   // if(critLeft == true && iOSLeft == true){
+	  if ((*critNode)->getBalance() == -1 ){
+		rotateRight(critNode);
+
+		(*critNode)->setBalance(0);
+	  }
+   // }	  
+    /* Right Right Case */
+   // if(critRight == true && iOSRight == true){
+	  if ((*critNode)->getBalance() == 1 ){
+		rotateLeft(critNode);
+
+		(*critNode)->setBalance(0);
+
+	  }	
+   // }
+    /* Left Right Case */ 
+   // if(critLeft == true && iOSRight == true) {
+	  if((*critNode)->getBalance() == -1){
+		rotateLeft(critNode);
+		rotateRight(critNode);
+	  
+		(*critNode)->setBalance(0);
+
+//	  }
+    }
+       
+    /* Right Left Case */ 
+  //  if(critRight == true && iOSLeft == true) {
+	  if((*critNode)->getBalance() == 1){
+		rotateRight(critNode);
+		rotateLeft(critNode);
+
+
+		(*critNode)->setBalance(0);
+	  }
+   // }
+       
+
+
+
 }
 
 template <typename T>
@@ -204,11 +260,12 @@ void AVL<T>::rotateLeft(Node<T>** critNode) {
     (*critNode)->setLeftChild(*tempRC);
     
     tempRC->setRightChild(*tempLC);
-    
+   /* 
     std::cout << "critNode is " << (*critNode)->getValue() << std::endl;
     std::cout << "root is " << root->getValue() << std::endl;
     std::cout << "tempRC is " << tempRC->getValue() << std::endl;
     std::cout << "tempLC is " << tempRC->getValue() << std::endl;
+    */
 }
 
 template <typename T>
@@ -221,11 +278,12 @@ void AVL<T>::rotateRight(Node<T>** critNode) {
     (*critNode)->setRightChild(*tempRC);
     
     tempRC->setLeftChild(*tempLC);
-    
+    /*
     std::cout << "critNode is " << (*critNode)->getValue() << std::endl;
     std::cout << "root is " << root->getValue() << std::endl;
     std::cout << "tempRC is " << tempRC->getValue() << std::endl;
     std::cout << "tempLC is " << tempRC->getValue() << std::endl;
+    */
 }
 
 
