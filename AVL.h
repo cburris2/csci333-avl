@@ -3,13 +3,14 @@
 
 #include "Node.h"
 #include <string>
+#include <list>
 
 template <typename T>
 class AVL {
  private:
   Node<T>* root;
   void traversalPrint(Node<T>* root);
-
+ 
  public:
   AVL<T>();
   ~AVL<T>();

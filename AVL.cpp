@@ -125,49 +125,74 @@ template <typename T>
 void AVL<T>::remove(T v) {
   Node<T>** curr = &root;
   Node<T>* iOS;
-   if ((*curr) !=0) {
+  Node<T>** critNode = &root;
+//  bool insertLeft,insertRight,critLeft,critRight = false;
+  std::list<Node<T>* > theList;
+ 
+  if ((*curr) !=0) {
 	  while((*curr) != 0 && (*curr)->getValue() != v){
 		if(v > (*curr)->getValue()){
 		    curr= &(*curr)->getRightChild();
+		    theList.push_back(*curr);
     		}
 		else{  
 		    curr= &(*curr)->getLeftChild();
+		    theList.push_back(*curr);
 		    }
 	  }
-	  
 	  if(*curr != 0){
 	   Node<T>* nTR = (*curr);	  
 	     if(nTR->getRightChild() == 0 && nTR->getLeftChild()==0){
 	     *curr = 0;
 	     }
 	     else if (nTR->getRightChild() ==0){
-
 		    *curr = (*curr)->getLeftChild();
 	     } 
 	     else if(nTR->getLeftChild() == 0){
-
 		    *curr = (*curr)->getRightChild();
 	     }
 	     else {
 		    iOS = nTR->getRightChild();
 		    while (iOS->getLeftChild() != 0){
-
 				iOS = iOS->getLeftChild();
 				*curr = (*curr)->getRightChild();
 
 		    }
 		    iOS->setLeftChild(*(nTR->getLeftChild()));	  	    
 		    *curr = (*curr)->getRightChild();
-
 	     }
-		delete nTR;
-	  std::cout<< "nodeToRemove del "<<std::endl;
+		    delete nTR;
+		    std::cout<< "nodeToRemove del "<<std::endl;
+	  }
+	  }
+	
+		   curr = &root; 
+	  	   
+	  while((*curr) != 0){
+		if(iOS->getValue() < (*curr)->getLeftChild()->getValue()){
+		    curr= &(*curr)->getLeftChild();
+		    theList.push_back(*curr);
+		    (*curr)->setBalance((*curr)->getBalance()-1);
+    		}
+		else{  
+		    curr= &(*curr)->getRightChild();
+		    theList.push_back(*curr);
 
-    }
-    }
+		    (*curr)->setBalance((*curr)->getBalance()+1);
+		    }
+
+		    
+		if ((*curr)->getBalance() == -1){
+		    critNode = curr;
+    		   // critLeft = true;
+		}
+
+		if ((*curr)->getBalance() == 1){
+		    critNode = curr;
+		   // critLeft = true;
+		}
+    	}
 }
-
-
 
 template <typename T>
 void AVL<T>::rotateLeft(Node<T>** critNode) {
